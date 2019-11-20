@@ -8,7 +8,10 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,8 @@ public class Game {
     public boolean gameOver=false;
     DatabaseHelper databaseHelper;
 
+
+
     private AlertDialog.Builder builder1;
 
     static {
@@ -37,8 +42,17 @@ public class Game {
 
     public void init(final Context context) {
         databaseHelper=new DatabaseHelper(context);
+
+
+
         builder1 = new AlertDialog.Builder(context);
-        builder1.setMessage("Game over");
+        final EditText editText=new EditText(context);
+        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        editText.setLayoutParams(layoutParams);
+        builder1.setView(editText);
+        builder1.setMessage("Game over, enter friend's email");
         builder1.setCancelable(true);
         builder1.setPositiveButton(
                 "OK",
@@ -49,17 +63,18 @@ public class Game {
                     }
                 });
         builder1.setNegativeButton(
-                "Share",
+                "Send",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent normalIntent = new Intent(Intent.ACTION_SEND);
-                        normalIntent.setType("text/plain");
-                        normalIntent.setPackage("com.twitter.android");
-                        normalIntent.putExtra(Intent.EXTRA_TEXT, "Score "+score);
-                        Log.d("twitter","share");
+                        Intent emailIntent=new Intent(Intent.ACTION_VIEW);
+                        Uri data=Uri.parse("mailto:?subject="+"Check my score"+"&body="+"Hi, played Threes with this score: "+score+"&to="+editText.getText().toString());
+                        emailIntent.setData(data);
+                        context.startActivity(Intent.createChooser(emailIntent,"Send email..."));
                 }
                 }
         );
+
+
 
         tiles=new Tile[4][4];
         score=0;
@@ -79,6 +94,7 @@ public class Game {
         randomVal();
         refresh();
     }
+
 
     public ArrayList<Integer> getArr(){
         return arr;
