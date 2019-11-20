@@ -3,6 +3,7 @@ package com.example.threes;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -17,7 +18,6 @@ import java.util.Random;
 public class Game {
     private static Game game;
     private ArrayList<Integer> arr=new ArrayList<>();
-    //private int[][] gameTiles=new int[4][4];
     public Tile[][] tiles;
     private int[] colors;
     public int score;
@@ -27,9 +27,6 @@ public class Game {
     DatabaseHelper databaseHelper;
 
     private AlertDialog.Builder builder1;
-
-
-
 
     static {
         game=new Game();
@@ -41,7 +38,7 @@ public class Game {
     public void init(final Context context) {
         databaseHelper=new DatabaseHelper(context);
         builder1 = new AlertDialog.Builder(context);
-        builder1.setMessage("Game Over");
+        builder1.setMessage("Game over");
         builder1.setCancelable(true);
         builder1.setPositiveButton(
                 "OK",
@@ -51,6 +48,18 @@ public class Game {
                         dialog.cancel();
                     }
                 });
+        builder1.setNegativeButton(
+                "Share",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent normalIntent = new Intent(Intent.ACTION_SEND);
+                        normalIntent.setType("text/plain");
+                        normalIntent.setPackage("com.twitter.android");
+                        normalIntent.putExtra(Intent.EXTRA_TEXT, "Score "+score);
+                        Log.d("twitter","share");
+                }
+                }
+        );
 
         tiles=new Tile[4][4];
         score=0;
@@ -96,10 +105,6 @@ public class Game {
 
         while (!placed){
             int i=r.nextInt(4),j=r.nextInt(4);
-            /*if(gameTiles[i][j]==0){
-                gameTiles[i][j]=2;
-                newval--;
-            }*/
             if(tiles[i][j].value==0){
                 tiles[i][j].value=nextVal;
                 placed=true;
