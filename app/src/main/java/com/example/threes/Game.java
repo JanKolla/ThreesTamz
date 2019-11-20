@@ -52,7 +52,7 @@ public class Game {
                 LinearLayout.LayoutParams.MATCH_PARENT);
         editText.setLayoutParams(layoutParams);
         builder1.setView(editText);
-        builder1.setMessage("Game over, enter friend's email");
+        builder1.setMessage("Game over");
         builder1.setCancelable(true);
         builder1.setPositiveButton(
                 "OK",
@@ -67,7 +67,10 @@ public class Game {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent emailIntent=new Intent(Intent.ACTION_VIEW);
-                        Uri data=Uri.parse("mailto:?subject="+"Check my score"+"&body="+"Hi, played Threes with this score: "+score+"&to="+editText.getText().toString());
+                        String msg="I played Threes and scored "+score+" points!";
+                        String to=editText.getText().toString();
+                        Log.d("to",to);
+                        Uri data=Uri.parse("mailto:?subject="+"My new score"+"&body="+msg+"&to="+to);
                         emailIntent.setData(data);
                         context.startActivity(Intent.createChooser(emailIntent,"Send email..."));
                 }
