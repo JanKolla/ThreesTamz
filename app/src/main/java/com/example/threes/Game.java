@@ -29,8 +29,6 @@ public class Game {
     public boolean gameOver=false;
     DatabaseHelper databaseHelper;
 
-
-
     private AlertDialog.Builder builder1;
 
     static {
@@ -43,14 +41,14 @@ public class Game {
     public void init(final Context context) {
         databaseHelper=new DatabaseHelper(context);
 
-
-
         builder1 = new AlertDialog.Builder(context);
         final EditText editText=new EditText(context);
+
         LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
         editText.setLayoutParams(layoutParams);
+
         builder1.setView(editText);
         builder1.setMessage("Game over");
         builder1.setCancelable(true);
@@ -77,8 +75,6 @@ public class Game {
                 }
         );
 
-
-
         tiles=new Tile[4][4];
         score=0;
         gameOver=false;
@@ -88,11 +84,14 @@ public class Game {
                 arr.add(0);
             }
         }
+
         TypedArray typedArray=context.getResources().obtainTypedArray(R.array.myColors);
         colors=new int[typedArray.length()];
+
         for(int i=0;i<colors.length;i++){
             colors[i]=typedArray.getColor(i,0);
         }
+
         typedArray.recycle();
         randomVal();
         refresh();
@@ -130,17 +129,13 @@ public class Game {
             }
         }
         nextVal=newVal;
-        Log.d("next",""+nextVal);
-
     }
 
     public void refresh(){
-        Log.d("pohyb","jo");
         arr.clear();
         int counter=0;
         for(int i=0;i<4;i++){
             for(int j=0;j<4;j++){
-                //arr.add(gameTiles[i][j]);
                 tiles[i][j].modified=false;
                 arr.add(tiles[i][j].value);
                 if(tiles[i][j].value!=0){
@@ -149,7 +144,6 @@ public class Game {
             }
         }
         if(counter==16){
-            Log.d("counter","16");
             checkGameOver();
         }
         if(gameOver){
@@ -360,8 +354,4 @@ public class Game {
         }
         refresh();
     }
-
-
-
-
 }

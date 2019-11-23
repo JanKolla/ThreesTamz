@@ -112,39 +112,31 @@ private ArrAdapter arrAdapter;
                     case MotionEvent.ACTION_UP:
                         if(Math.abs(event.getX()-x)>Math.abs(event.getX()-y)){
                             if(event.getX()>x && event.getX()-x>300){
-                                Toast.makeText(MainActivity.this,"doprava",Toast.LENGTH_SHORT).show();
                                 Game.getGame().moveRight();
                                 nextValue.setText(""+Game.getGame().nextVal);
                                 score.setText(""+Game.getGame().score);
                                 moveSound.start();
-                                //moveSound.start();
                                 arrAdapter.notifyDataSetChanged();
                             }else if(event.getX()<x && x-event.getX()>300) {
-                                Toast.makeText(MainActivity.this,"doleva",Toast.LENGTH_SHORT).show();
                                 Game.getGame().moveLeft();
                                 nextValue.setText(""+Game.getGame().nextVal);
                                 score.setText(""+Game.getGame().score);
                                 moveSound.start();
-                                //moveSound.start();
                                 arrAdapter.notifyDataSetChanged();
                             }
 
                         }else{
                             if(event.getY()>y){
-                                Toast.makeText(MainActivity.this,"dolu",Toast.LENGTH_SHORT).show();
                                 Game.getGame().moveDown();
                                 nextValue.setText(""+Game.getGame().nextVal);
                                 score.setText(""+Game.getGame().score);
                                 moveSound.start();
-                                //moveSound.start();
                                 arrAdapter.notifyDataSetChanged();
                             }else{
-                                Toast.makeText(MainActivity.this,"nahoru",Toast.LENGTH_SHORT).show();
                                 Game.getGame().moveUp();
                                 nextValue.setText(""+Game.getGame().nextVal);
                                 score.setText(""+Game.getGame().score);
                                 moveSound.start();
-                                //moveSound.start();
                                 arrAdapter.notifyDataSetChanged();
                             }
                         }
@@ -168,7 +160,6 @@ private ArrAdapter arrAdapter;
 
     @Override
     public void hearShake() {
-        Toast.makeText(MainActivity.this,"shake",Toast.LENGTH_SHORT).show();
         setGrid();
         initGame();
         setData();
