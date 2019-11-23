@@ -39,6 +39,7 @@ private TextView score;
 private TextView highScore;
 private float x,y;
 private MediaPlayer moveSound;
+private TextView timeView;
 DatabaseHelper databaseHelper;
 SharedPreferences sharedPreferences;
 SharedPreferences.Editor editor;
@@ -57,6 +58,8 @@ private ArrAdapter arrAdapter;
         moveSound=MediaPlayer.create(MainActivity.this,R.raw.move);
         databaseHelper=new DatabaseHelper(this);
         sharedPreferences=getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        timeView=findViewById(R.id.time);
+
 
         long getTime=sharedPreferences.getLong("time",0);
         date=new Date();
@@ -70,7 +73,8 @@ private ArrAdapter arrAdapter;
         diff-=TimeUnit.MINUTES.toMillis(mins);
         long sec=TimeUnit.MILLISECONDS.toSeconds(diff);
 
-        Toast.makeText(MainActivity.this,""+days+" "+hours+" "+mins+" "+sec,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this,""+days+" "+hours+" "+mins+" "+sec,Toast.LENGTH_SHORT).show();
+        timeView.setText("d: "+days+""+System.getProperty("line.separator")+" h: "+hours+""+System.getProperty("line.separator")+" m: "+mins);
 
         Cursor data=databaseHelper.getData();
         int s=0;

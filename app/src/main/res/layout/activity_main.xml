@@ -10,46 +10,51 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="160dp">
+
         <LinearLayout
-            android:layout_width="200dp"
+            android:layout_width="410dp"
             android:layout_height="70dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginRight="3dp"
-                android:layout_marginTop="3dp"
                 android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
                 android:background="@drawable/designer"
-                android:layout_weight="1">
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="#FFFFFF"
                     android:text="MAX"
+                    android:textColor="#FFFFFF"
                     android:textSize="15sp"></TextView>
 
                 <TextView
+                    android:id="@+id/highScore"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:id="@+id/highScore"
                     android:text=""
-                    android:textSize="25sp"
                     android:textColor="#FFFFFF"
+                    android:textSize="25sp"
                     android:textStyle="bold"></TextView>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_marginTop="3dp"
+                android:layout_weight="1"
                 android:background="@drawable/designer"
-                android:layout_weight="1">
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -64,8 +69,47 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="0"
-                    android:textSize="20sp"
                     android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold"></TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="3dp"
+                android:background="@drawable/designer"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/playing"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Playing after"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold"></TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/designer"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
                     android:textStyle="bold"></TextView>
             </LinearLayout>
         </LinearLayout>
@@ -86,8 +130,10 @@
             android:textColor="#000000"
             android:textSize="40sp"
             android:textStyle="bold" />
+
     </RelativeLayout>
-<RelativeLayout
+
+    <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center">
