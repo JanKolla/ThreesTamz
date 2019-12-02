@@ -10,10 +10,17 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
+import android.os.StrictMode;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -28,28 +35,26 @@ public class Game {
     public int nextVal=1;
     public boolean gameOver=false;
     DatabaseHelper databaseHelper;
+    private Twitter twitter;
 
     private AlertDialog.Builder builder1;
 
     static {
         game=new Game();
+
+
     }
     public static Game getGame(){
         return game;
     }
 
     public void init(final Context context) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        configureTwitter();
         databaseHelper=new DatabaseHelper(context);
 
         builder1 = new AlertDialog.Builder(context);
-        final EditText editText=new EditText(context);
-
-        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        editText.setLayoutParams(layoutParams);
-
-        builder1.setView(editText);
         builder1.setMessage("Game over");
         builder1.setCancelable(true);
         builder1.setPositiveButton(
@@ -61,16 +66,10 @@ public class Game {
                     }
                 });
         builder1.setNegativeButton(
-                "Send",
+                "Share",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent emailIntent=new Intent(Intent.ACTION_VIEW);
-                        String msg="I played Threes and scored "+score+" points!";
-                        String to=editText.getText().toString();
-                        Log.d("to",to);
-                        Uri data=Uri.parse("mailto:?subject="+"My new score"+"&body="+msg+"&to="+to);
-                        emailIntent.setData(data);
-                        context.startActivity(Intent.createChooser(emailIntent,"Send email..."));
+                        sendTweet();
                 }
                 }
         );
@@ -353,5 +352,32 @@ public class Game {
             randomVal();
         }
         refresh();
+    }
+
+    public void configureTwitter() {
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setDebugEnabled(true)
+                .setOAuthConsumerKey("oEJEAxEPjNgWb0O35QNVaA")
+                .setOAuthConsumerSecret("2TyiPmQMpnYHPE3S8ITkIQWld5fjk6jQ5eGfTsG8kg")
+                .setOAuthAccessToken("927024486-4X07W3nTicx2SG0dTccqsNzraAyT1G8Ffc4VvNqN")
+                .setOAuthAccessTokenSecret("neehbYt9lBY6o29UdcMLsZ1Zs9vVLPPncOpivLoyXtA");
+
+        //cb.setUseSSL(true);
+        TwitterFactory tf = new TwitterFactory(cb.build());
+        twitter = tf.getInstance();
+    }
+
+    public void sendTweet(){
+        String latestStatus = "I played Threes and scored "+score+" points!";
+
+        try {
+            Status status = twitter.updateStatus(latestStatus);
+        } catch (TwitterException e) {
+            // TODO Auto-generated catch block
+            // oops
+
+            e.printStackTrace();
+        }
+
     }
 }
